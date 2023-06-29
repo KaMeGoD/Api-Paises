@@ -1,0 +1,33 @@
+.header{
+  display: flex;
+  justify-content:  space-between ;
+  font-size: 1.2rem;
+  background-color: hsl(0, 0%, 100%);
+  border-bottom: 1px solid ;
+}
+
+.darkmode{
+  background-color: hsl(209, 23%, 22%);
+}
+
+.contenedorTop{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_btnDarkMode{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+}
+.btnDarkMode_img{
+  width: 15px;
+}
+.btnDarkMode_texto{
+  font-size: 15px;
+}
+
