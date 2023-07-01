@@ -4,15 +4,17 @@ interface PropsSearch{
   imgSearch: string;
   altSearch: string;
   darkMode: string;
+  value: string;
+  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Search: React.FC<PropsSearch> = ({ imgSearch, altSearch, darkMode }) =>{
+export const Search: React.FC<PropsSearch> = ({ imgSearch, altSearch, darkMode,value, onChangeInput }) =>{
   return(
     <>
       <div className="search-container container">
         <div className={`search-input sombra ${darkMode}`}>
           <img className={`search-img ${darkMode}`} src={imgSearch} alt={altSearch} />
-          <input type="text" className={`inputs ${darkMode}`} placeholder='Search for a country...'/>
+          <input onChange={onChangeInput} value={value} type="text" className={`inputs ${darkMode}`} placeholder='Search for a country...'/>
         </div>
         <div className={`search-filters sombra ${darkMode}`}>
           <select className={`inputs ${darkMode}`} name="filter" id="filter">

@@ -12,7 +12,13 @@
 
 html{
   font-size: 62.5%;
+  box-sizing: border-box;
   font-family: 'Nunito Sans', sans-serif;
+}
+*,
+*::before,
+*::after{
+  box-sizing: inherit;
 }
 
 body{
@@ -41,7 +47,7 @@ body{
   box-shadow: 4px 6px 14px -6px rgba(0, 0, 0, 0.75);
 }
 
-.darkModeInputs{
+.container-order .darkModeInputs{
   background-color: hsl(209, 23%, 22%);
   color: hsl(0, 0%, 100%);
 }
