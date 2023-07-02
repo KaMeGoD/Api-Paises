@@ -8,35 +8,65 @@ import SearchWhite from '../assets/img/searchWhite.svg';
 import SearchBlack from '../assets/img/searchBlack.svg';
 
 import { Header } from '../components/Header'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Search } from '../components/Search';
 import { Card } from '../components/Card';
 
 import data from '../api/data.json';
 
-export const HomePage: React.FC = () =>{
+
+interface Data {
+  name: string;
+  population: number;
+  region: string;
+  capital: string | undefined;
+  flag: string;
+}
+
+export const HomePage: React.FC = () => {
   // dark mode
   const [mode, setMode] = useState<boolean>(false);
   // Datos
   const [filterValue, setFilterValue] = useState('');
-
+  const [arrData, setArrData] = useState<Data[]>([]);
+  const dataArray = Object.values(data) as Data[]; 
+  useEffect(() => {
+    const dataArray = Object.values(data) as Data[];
+    setArrData(dataArray);
+  }, []);
 
   const handleClickMode = () => {
-    if (mode) {
-      setMode(false);
-    } else {
-      setMode(true)
-    }
-  }
+    setMode(prevMode => !prevMode);
+  };
 
-  const handleOnChangeInput= (e: React.ChangeEvent<HTMLInputElement>)=>{
+  const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFilterValue(value);
-    const filtered = data.filter(item =>
-      item.name.toLowerCase().includes(value.toLowerCase()));
-  }
+    const filtered = arrData.filter(item =>
+      item.name.toLowerCase().includes(value.toLowerCase())
+    );
+    if(value.length== 0){
+      setArrData(dataArray)
+    }else{
+      setArrData(filtered);
+    }
+  };
+  const handleOnChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    console.log(value);
+    
+    setFilterValue(value);
+    const filtered = arrData.filter(item =>
+      item.region.toLowerCase().includes(value.toLowerCase())
+    );
+    if(value.length== 0){
+      setArrData(dataArray)
+    }else{
+      setArrData(filtered);
+    }
+  };
 
-  return(
+  return (
     <>
       <Header
         textMode={mode ? 'Light Mode' : 'Dark Mode'}
@@ -48,6 +78,7 @@ export const HomePage: React.FC = () =>{
       />
       <div className={mode ? 'mainblack' : 'main'}>
         <Search
+          onChangeSelect={handleOnChangeSelect}
           onChangeInput={handleOnChangeInput}
           value={filterValue}
           darkMode={mode ? 'darkModeInputs' : ''}
@@ -57,7 +88,7 @@ export const HomePage: React.FC = () =>{
 
         <main className="apis">
           <div className="container container-order">
-            {data.map((item, index) => (
+            {arrData.map((item, index) => (
               <Card
                 key={index}
                 imgCard={item.flag}
@@ -72,7 +103,8 @@ export const HomePage: React.FC = () =>{
           </div>
         </main>
       </div>
-
     </>
-)
-}
+  );
+};
+
+
